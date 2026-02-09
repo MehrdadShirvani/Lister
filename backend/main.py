@@ -7,7 +7,7 @@ import uvicorn
 from core.config import settings
 from core.database import engine, Base
 # from routers import accounts, lists, tasks, tags, notifications, notes, plans, suggestions
-
+from routers import auth
 from models.account_models import AccountStatus, Account
 from models.list_models import List
 from models.task_models import Task, TaskUrl, Suggestion
@@ -39,27 +39,13 @@ async def lifespan(app: FastAPI):
 
 def seed_initial_data():
     """Seed initial data"""
-    from core.database import SessionLocal
-    db = SessionLocal()
-    
     try:
-        from models.account_models import AccountStatus
-        existing_statuses = db.query(AccountStatus).count()
-        
-        if existing_statuses == 0:
-            statuses = [
-                AccountStatus(title="Active"),
-                AccountStatus(title="Inactive"),
-                AccountStatus(title="Suspended"),
-                AccountStatus(title="Pending Verification"),
-            ]
-            db.add_all(statuses)
-            db.commit()
-            print("✓ Seeded initial account statuses")
+        from seed_data import main as seed_main
+        seed_main()
+    except ImportError:
+        print("Seed script not found, skipping data seeding")
     except Exception as e:
-        print(f"✗ Error seeding data: {e}")
-    finally:
-        db.close()
+        print(f"Error during seeding: {e}")
 
 # Create FastAPI app 
 app = FastAPI(
@@ -83,6 +69,7 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 
 # # Include all routers
+app.include_router(auth.router, prefix=settings.API_V1_STR)
 # app.include_router(accounts.router, prefix=settings.API_V1_STR)
 # app.include_router(lists.router, prefix=settings.API_V1_STR)
 # app.include_router(tasks.router, prefix=settings.API_V1_STR)
