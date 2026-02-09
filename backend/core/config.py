@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     VERSION: str = "1.0.0"
     
     # Security
-    SECRET_KEY: str = os.getenv("SECRET_KEY", "your-secret-key-here-change-in-production")
+    SECRET_KEY: str = os.getenv("SECRET_KEY")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
@@ -29,6 +29,13 @@ class Settings(BaseSettings):
     DB_POOL_SIZE: int = int(os.getenv("DB_POOL_SIZE", "20"))
     DB_MAX_OVERFLOW: int = int(os.getenv("DB_MAX_OVERFLOW", "10"))
     DB_ECHO: bool = os.getenv("DB_ECHO", "False").lower() == "true"
+
+
+    # Admin Seed Data
+    ADMIN_FIRST_NAME : str = os.environ["ADMIN_FIRST_NAME"]
+    ADMIN_LAST_NAME : str = os.environ["ADMIN_LAST_NAME"]
+    ADMIN_EMAIL : str = os.environ["ADMIN_EMAIL"]
+    ADMIN_PASSWORD : str = os.environ["ADMIN_PASSWORD"]
 
     @property
     def sqlalchemy_database_url(self) -> str:
