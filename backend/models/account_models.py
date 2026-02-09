@@ -19,6 +19,17 @@ class AccountStatus(Base):
     
     accounts = relationship("Account", back_populates="account_status")
 
+class AccountRole(Base):
+    """Account role reference table"""
+    __tablename__ = "account_role"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String(50), nullable=False, unique=True, index=True)
+    description = Column(Text)
+    level = Column(Integer, default=0)  # Higher number = more permissions
+    created_at = Column(TIMESTAMP(timezone=True), server_default=func.now())
+    
+    accounts = relationship("Account", back_populates="role")
 
 class Account(Base):
     """Main account table"""
@@ -31,7 +42,9 @@ class Account(Base):
     join_date = Column(TIMESTAMP(timezone=True), server_default=func.now(), nullable=False)
     account_status_id = Column(Integer, ForeignKey('account_status.id'), nullable=False)
     password_hash = Column(Text, nullable=False)
-    
+    account_role_id = Column(Integer, ForeignKey('account_role.id'), nullable=False, default=1)
+
+    role = relationship("AccountRole", back_populates="accounts")
     account_status = relationship("AccountStatus", back_populates="accounts")
     timezones = relationship(
         "AccountTimezone", 

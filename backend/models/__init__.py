@@ -1,5 +1,5 @@
 # Account models
-from .account_models import AccountStatus, Account
+from .account_models import AccountStatus, Account, AccountRole
 
 # List models
 from .list_models import List

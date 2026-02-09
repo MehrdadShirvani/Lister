@@ -25,7 +25,7 @@ SessionLocal = sessionmaker(
 )
 
 Base = declarative_base()
-from models.account_models import AccountStatus, Account
+from models.account_models import AccountStatus, Account, AccountRole
 from models.list_models import List
 from models.task_models import Task, TaskUrl, Suggestion
 from models.tag_models import Tag
