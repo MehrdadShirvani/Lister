@@ -7,7 +7,7 @@ import uvicorn
 from core.config import settings
 from core.database import engine, Base
 # from routers import accounts, lists, tasks, tags, notifications, notes, plans, suggestions
-from routers import auth, tags, timeblocks, tasks, lists, notes
+from routers import auth, tags, timeblocks, tasks, lists, notes, plans, suggestions
 from models.account_models import AccountStatus, Account
 from models.list_models import List
 from models.task_models import Task, TaskUrl, Suggestion
@@ -77,8 +77,8 @@ app.include_router(tags.router, prefix=settings.API_V1_STR)
 app.include_router(timeblocks.router, prefix=settings.API_V1_STR)
 # app.include_router(notifications.router, prefix=settings.API_V1_STR)
 app.include_router(notes.router, prefix=settings.API_V1_STR)
-# app.include_router(plans.router, prefix=settings.API_V1_STR)
-# app.include_router(suggestions.router, prefix=settings.API_V1_STR)
+app.include_router(plans.router, prefix=settings.API_V1_STR)
+app.include_router(suggestions.router, prefix=settings.API_V1_STR)
 
 # Health check endpoints
 @app.get("/")
