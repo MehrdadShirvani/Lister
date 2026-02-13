@@ -22,7 +22,7 @@ from .plan_models import Plan
 # TimeBlock models
 from .timeblock_models import TimeBlock
 
-from .task_models import TaskUrl, list_tasks, task_tags
+from .task_models import TaskUrl, list_tasks, task_tags, task_notes
 from .list_models import list_tags
 from .tag_models import timeblock_tags
 

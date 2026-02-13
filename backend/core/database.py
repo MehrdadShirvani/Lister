@@ -33,7 +33,7 @@ from models.notification_models import Notification
 from models.note_models import Note
 from models.plan_models import Plan
 from models.timeblock_models import TimeBlock
-from models.task_models import TaskUrl, list_tasks, task_tags
+from models.task_models import TaskUrl, list_tasks, task_tags, task_notes
 from models.list_models import list_tags
 from models.tag_models import timeblock_tags
 

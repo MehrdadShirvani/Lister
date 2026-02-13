@@ -17,6 +17,13 @@ task_tags = Table(
     Column('tag_id', BigInteger, ForeignKey('tag.id', ondelete='CASCADE'), primary_key=True)
 )
 
+task_notes = Table(
+    'task_notes',
+    Base.metadata,
+    Column('task_id', BigInteger, ForeignKey('task.id', ondelete='CASCADE'), primary_key=True),
+    Column('note_id', BigInteger, ForeignKey('note.id', ondelete='CASCADE'), primary_key=True)
+)
+
 class Task(Base):
     """Main task table"""
     __tablename__ = "task"
@@ -34,6 +41,7 @@ class Task(Base):
     estimated_duration = Column(Integer)  # in minutes
     priority = Column(Integer)
     status = Column(String(50))
+    notes = relationship("Note", secondary=task_notes, back_populates="tasks")
 
     account = relationship("Account", back_populates="tasks")
     list = relationship("List", back_populates="tasks")
