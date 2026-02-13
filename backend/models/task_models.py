@@ -91,21 +91,3 @@ class TaskUrl(Base):
     created_at = Column(TIMESTAMP(timezone=True), server_default=func.now())
     
     task = relationship("Task", back_populates="urls")
-
-
-class Suggestion(Base):
-    """Suggestions for tasks in time blocks"""
-    __tablename__ = "suggestions"
-    __table_args__ = (
-        UniqueConstraint('task_id', 'time_block_id', 'title', name='uq_suggestion_composite'),
-    )
-    
-    task_id = Column(BigInteger, ForeignKey('task.id', ondelete='CASCADE'), primary_key=True)
-    time_block_id = Column(BigInteger, ForeignKey('timeblock.id', ondelete='CASCADE'), primary_key=True)
-    title = Column(String(255), primary_key=True)
-    status = Column(String(50))
-    created_at = Column(TIMESTAMP(timezone=True), server_default=func.now(), nullable=False)
-    updated_at = Column(TIMESTAMP(timezone=True), onupdate=func.now())
-    
-    task = relationship("Task", back_populates="suggestions")
-    time_block = relationship("TimeBlock", back_populates="suggestions")

@@ -5,7 +5,10 @@ from .account_models import AccountStatus, Account, AccountRole
 from .list_models import List
 
 # Task models
-from .task_models import Task, TaskUrl, Suggestion
+from .task_models import Task, TaskUrl
+
+# Suggestion models
+from .suggestion_models import Suggestion
 
 # Tag models
 from .tag_models import Tag
