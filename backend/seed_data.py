@@ -9,7 +9,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from backend.core.config import Settings
 from core.database import SessionLocal
-from models.account_models import AccountRole, AccountStatus
+from models.account_models import AccountRole, AccountStatus, Account
 from models.tag_models import Tag
 from sqlalchemy.exc import IntegrityError
 
@@ -60,10 +60,16 @@ def seed_account_statuses(db):
 def seed_public_tags(db):
     """Seed public tags by category"""
     print("\nSeeding public tags...")
-
-    account_id = None
     
-    # Tags by type
+    # Get admin user
+    admin_role = db.query(AccountRole).filter_by(name="Admin").first()
+    admin_user = db.query(Account).filter_by(account_role_id=admin_role.id).first()
+    
+    if not admin_user:
+        print("  No admin user found, skipping tag seeding")
+        return
+    
+    # Tags by type (same as before)
     tags_by_type = {
         "Mood": [
             "Calm", "Cozy", "Light", "Reflective", "Melancholic",
@@ -100,14 +106,18 @@ def seed_public_tags(db):
     for tag_type, tag_list in tags_by_type.items():
         print(f"\n  Type: {tag_type}")
         for tag_name in tag_list:
-            # Check if tag already exists
-            existing = db.query(Tag).filter_by(title=tag_name, type=tag_type).first()
+            existing = db.query(Tag).filter_by(
+                title=tag_name, 
+                type=tag_type,
+                is_public=True
+            ).first()
+            
             if not existing:
                 tag = Tag(
                     title=tag_name,
                     type=tag_type,
                     description=f"Public {tag_type.lower()} tag",
-                    account_id=account_id,
+                    account_id=admin_user.id,
                     is_public=True
                 )
                 db.add(tag)
@@ -119,7 +129,7 @@ def seed_public_tags(db):
     
     db.commit()
     print(f"\n  Total: {tags_added} tags added, {tags_skipped} already existed")
-
+    
 def main():
     """Main seeding function"""
     print("=" * 50)
