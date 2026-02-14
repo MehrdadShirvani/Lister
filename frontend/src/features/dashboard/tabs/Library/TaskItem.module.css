@@ -1,0 +1,127 @@
+.taskItem {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+}
+
+.taskItem:hover {
+    border-color: var(--color-accent);
+    transform: translateX(4px);
+}
+
+.completed {
+    opacity: 0.7;
+    background: var(--color-bg-tertiary);
+}
+
+.completed .taskTitle {
+    text-decoration: line-through;
+    color: var(--color-text-tertiary);
+}
+
+.taskContent {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.taskHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+}
+
+.taskTitle {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin: 0;
+    flex: 1;
+}
+
+.taskActions {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.actionButton {
+    background: none;
+    border: none;
+    color: var(--color-text-tertiary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+}
+
+.actionButton:hover:not(:disabled) {
+    background: var(--color-bg-tertiary);
+    color: var(--color-accent);
+}
+
+.actionButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.taskDescription {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.taskTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+}
+
+.taskTag {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-secondary);
+    padding: 2px var(--spacing-sm);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    border: 1px solid var(--color-border);
+}
+
+.taskMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    font-size: 0.8rem;
+    color: var(--color-text-tertiary);
+}
+
+.taskDuration,
+.taskCommitment {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.taskUpdated {
+    margin-left: auto;
+}
+
+.completeButton {
+    background: transparent;
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
+    padding: var(--spacing-xs) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    align-self: flex-start;
+}
+
+.completeButton:hover {
+    background: var(--color-success);
+    color: var(--color-bg-primary);
+}
