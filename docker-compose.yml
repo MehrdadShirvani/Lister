@@ -42,9 +42,9 @@ services:
       retries: 3
 
   frontend:
-    build: ./frontend
-    context: ./frontend
-    args:
+    build: 
+      context: ./frontend
+      args:
       - VITE_API_URL=${VITE_API_URL}
     container_name: lister-frontend
     restart: unless-stopped
