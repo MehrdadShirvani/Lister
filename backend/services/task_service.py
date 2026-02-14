@@ -11,7 +11,7 @@ from schemas.task_schemas import TaskCreate, TaskUpdate, TaskFilterParams
 
 class TaskService:
     
-    def _validate_tags(self, db: Session, tag_ids: List[int], user_id: int):
+    def _validate_tags(self, db: Session, tag_ids: list[int], user_id: int):
         """Validate that tags exist and are accessible by user"""
         if not tag_ids:
             return []
@@ -90,7 +90,7 @@ class TaskService:
         
         return True
     
-    def _process_urls(self, db: Session, task: Task, urls: List[str]):
+    def _process_urls(self, db: Session, task: Task, urls: list[str]):
         """Add URLs to task"""
         if not urls:
             return
@@ -106,7 +106,7 @@ class TaskService:
                 task_url = TaskUrl(task_id=task.id, url=url)
                 db.add(task_url)
     
-    def _remove_urls(self, db: Session, task: Task, urls: List[str]):
+    def _remove_urls(self, db: Session, task: Task, urls: list[str]):
         """Remove specific URLs from task"""
         if not urls:
             return

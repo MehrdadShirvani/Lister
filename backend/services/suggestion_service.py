@@ -3,7 +3,7 @@ from sqlalchemy import and_, or_
 from fastapi import HTTPException, status
 from typing import List, Optional
 from datetime import datetime, timedelta
-from backend.schemas.plan_schemas import PlanStatus
+from schemas.plan_schemas import PlanStatus
 from models.suggestion_models import Suggestion
 from models.task_models import Task
 from models.timeblock_models import TimeBlock

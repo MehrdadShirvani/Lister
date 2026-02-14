@@ -29,7 +29,7 @@ class Plan(Base):
     
     # Performance metrics
     completion_rate = Column(Float, default=0.0)  # How well it was followed
-    notes = Column(Text)
+    description = Column(Text)
     
     # Recurrence
     is_recurring = Column(Boolean, default=False)
@@ -41,7 +41,17 @@ class Plan(Base):
     
     # Relationships
     task = relationship("Task", back_populates="plans")
-    note = relationship("Note", back_populates="plans")
+    primary_note = relationship(
+        "Note", 
+        foreign_keys=[note_id],
+        backref="primary_for_plan"
+    )
+    
+    notes = relationship(
+        "Note",
+        foreign_keys="[Note.plan_id]",
+        back_populates="plan"
+    )
     time_block = relationship("TimeBlock", back_populates="plans")
     account = relationship("Account", back_populates="plans")
     

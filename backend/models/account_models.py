@@ -3,13 +3,6 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from core.database import Base
 
-account_timezones = Table(
-    'account_timezones',
-    Base.metadata,
-    Column('account_id', BigInteger, ForeignKey('account.id', ondelete='CASCADE'), primary_key=True),
-    Column('time_zone', String(100), primary_key=True)
-)
-
 class AccountStatus(Base):
     """Account status reference table"""
     __tablename__ = "account_status"
@@ -46,11 +39,7 @@ class Account(Base):
 
     role = relationship("AccountRole", back_populates="accounts")
     account_status = relationship("AccountStatus", back_populates="accounts")
-    timezones = relationship(
-        "AccountTimezone", 
-        secondary=account_timezones,
-        back_populates="accounts"
-    )
+
     lists = relationship("List", back_populates="account", cascade="all, delete-orphan")
     tasks = relationship("Task", back_populates="account", cascade="all, delete-orphan")
     

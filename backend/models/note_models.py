@@ -54,8 +54,7 @@ class Note(Base):
     
     # Relationships
     account = relationship("Account", back_populates="notes")
-    plan = relationship("Plan", back_populates="notes")
-    plans = relationship("Plan", back_populates="note", foreign_keys="[Plan.note_id]")
+    plan = relationship("Plan", foreign_keys=[plan_id], back_populates="notes")
     
     # Tags
     tags = relationship(

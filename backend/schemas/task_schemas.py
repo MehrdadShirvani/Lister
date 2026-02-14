@@ -3,6 +3,8 @@ from typing import Optional, List
 from datetime import datetime, date
 from enum import Enum
 
+from schemas.tag_schemas import TagResponse
+
 # Task status options
 class TaskStatus(str, Enum):
     NOT_STARTED = "not_started"
@@ -21,6 +23,7 @@ class TaskType(str, Enum):
 # Base Task schema
 class TaskBase(BaseModel):
     title: str
+    description: Optional[str] = None
     type: Optional[TaskType] = TaskType.TASK
     scheduled_date: Optional[date] = None
     estimated_duration: Optional[int] = None  # in minutes
@@ -37,6 +40,7 @@ class TaskCreate(TaskBase):
 # For updating tasks
 class TaskUpdate(BaseModel):
     title: Optional[str] = None
+    description: Optional[str] = None
     type: Optional[TaskType] = None
     list_id: Optional[int] = None
     parent_task_id: Optional[int] = None
@@ -62,6 +66,7 @@ class TaskUrlResponse(BaseModel):
 class TaskHierarchyNode(BaseModel):
     id: int
     title: str
+    description: Optional[str] = None
     type: str
     status: str
     priority: Optional[int]
@@ -83,7 +88,7 @@ class TaskResponse(TaskBase):
     completed_at: Optional[datetime]
     
     # Relationships
-    tags: List[dict] = []  # Simplified tag info
+    tags: List[TagResponse] = []
     urls: List[TaskUrlResponse] = []
     subtask_count: int = 0
     

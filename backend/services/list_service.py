@@ -10,7 +10,7 @@ from schemas.list_schemas import ListCreate, ListUpdate, ListFilterParams, TaskH
 
 class ListService:
     
-    def _validate_tags(self, db: Session, tag_ids: List[int], user_id: int):
+    def _validate_tags(self, db: Session, tag_ids: list[int], user_id: int):
         """Validate that tags exist and are accessible by user"""
         if not tag_ids:
             return []
@@ -64,7 +64,7 @@ class ListService:
             "estimated_total_duration": total_duration if total_duration > 0 else None
         }
     
-    def _build_task_hierarchy(self, db: Session, list_id: int, user_id: int, parent_id: Optional[int] = None, depth: int = 0) -> List[TaskHierarchyNode]:
+    def _build_task_hierarchy(self, db: Session, list_id: int, user_id: int, parent_id: Optional[int] = None, depth: int = 0) -> list[TaskHierarchyNode]:
         """Build task hierarchy tree for a list"""
         query = db.query(Task).filter(
             Task.account_id == user_id,
@@ -96,7 +96,7 @@ class ListService:
         
         return result
     
-    def _get_task_summaries(self, db: Session, list_id: int, user_id: int) -> List[Dict]:
+    def _get_task_summaries(self, db: Session, list_id: int, user_id: int) -> list[Dict]:
         """Get task summaries for a list"""
         tasks = db.query(Task).filter(
             Task.account_id == user_id,
@@ -112,6 +112,8 @@ class ListService:
             summaries.append({
                 "id": task.id,
                 "title": task.title,
+                "created_at": task.created_at,
+                "updated_at": task.updated_at,
                 "status": task.status,
                 "priority": task.priority,
                 "scheduled_date": task.scheduled_date,
@@ -129,13 +131,13 @@ class ListService:
         # Check if list with same name already exists for this user
         existing = db.query(List).filter(
             List.account_id == user_id,
-            List.name == list_data.name
+            List.title == list_data.title
         ).first()
         
         if existing:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"You already have a list named '{list_data.name}'"
+                detail=f"You already have a list named '{list_data.title}'"
             )
         
         # Validate tags if provided
@@ -146,7 +148,7 @@ class ListService:
         # Create list
         new_list = List(
             account_id=user_id,
-            name=list_data.name,
+            title=list_data.title,
             description=list_data.description,
             priority=list_data.priority,
             status=list_data.status.value if list_data.status else "active"
@@ -163,7 +165,7 @@ class ListService:
         db.commit()
         db.refresh(new_list)
         
-        return new_list
+        return new_list 
     
     # ============= READ =============
     
@@ -230,7 +232,7 @@ class ListService:
             search_term = f"%{filters.search}%"
             query = query.filter(
                 or_(
-                    List.name.ilike(search_term),
+                    List.title.ilike(search_term),
                     List.description.ilike(search_term)
                 )
             )
@@ -241,10 +243,10 @@ class ListService:
         if filters.created_before:
             query = query.filter(List.created_at <= filters.created_before)
         
-        # Order by priority and name
+        # Order by priority and title
         query = query.order_by(
             List.priority.desc().nullslast(),
-            List.name.asc()
+            List.title.asc()
         )
         
         lists = query.offset(skip).limit(limit).all()
@@ -289,18 +291,18 @@ class ListService:
         if "status" in update_data and update_data["status"]:
             update_data["status"] = update_data["status"].value
         
-        # Check name uniqueness if changing
-        if "name" in update_data and update_data["name"] != list_obj.name:
+        # Check title uniqueness if changing
+        if "title" in update_data and update_data["title"] != list_obj.title:
             existing = db.query(List).filter(
                 List.account_id == user_id,
-                List.name == update_data["name"],
+                List.title == update_data["title"],
                 List.id != list_id
             ).first()
             
             if existing:
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=f"You already have a list named '{update_data['name']}'"
+                    detail=f"You already have a list named '{update_data['title']}'"
                 )
         
         # Handle tag updates
@@ -399,7 +401,7 @@ class ListService:
         db.commit()
         
         return {
-            "message": f"All tasks moved from '{source.name}' to '{target.name}'",
-            "source_list": source.name,
-            "target_list": target.name
+            "message": f"All tasks moved from '{source.title}' to '{target.title}'",
+            "source_list": source.title,
+            "target_list": target.title
         }

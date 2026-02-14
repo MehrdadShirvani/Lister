@@ -3,6 +3,8 @@ from typing import Optional, List, Dict, Any
 from datetime import datetime
 from enum import Enum
 
+from schemas.tag_schemas import TagResponse
+
 # Sort options
 class NoteSortBy(str, Enum):
     CREATED_AT = "created_at"
@@ -106,7 +108,7 @@ class NoteResponse(NoteBase):
     is_archived: bool
     
     # Relationships
-    tags: List[Dict[str, Any]] = []
+    tags: List[TagResponse] = []
     parent_note: Optional['NotePreview'] = None
     child_notes: List['NotePreview'] = []
     related_notes: List['RelatedNote'] = []

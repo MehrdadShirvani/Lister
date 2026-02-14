@@ -33,6 +33,7 @@ class Task(Base):
     list_id = Column(BigInteger, ForeignKey('list.id', ondelete='CASCADE'), nullable=True)
     parent_task_id = Column(BigInteger, ForeignKey('task.id', ondelete='SET NULL'), nullable=True)
     title = Column(String(255), nullable=False)
+    description = Column(Text, nullable=True)
     type = Column(String(50))
     created_at = Column(TIMESTAMP(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(TIMESTAMP(timezone=True), onupdate=func.now())

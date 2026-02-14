@@ -17,7 +17,7 @@ class List(Base):
     
     id = Column(BigInteger, primary_key=True, index=True)
     account_id = Column(BigInteger, ForeignKey('account.id', ondelete='CASCADE'), nullable=False)
-    name = Column(String(255), nullable=False)
+    title = Column(String(255), nullable=False)
     description = Column(Text)
     priority = Column(Integer)
     status = Column(String(50))

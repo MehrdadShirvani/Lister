@@ -3,6 +3,8 @@ from typing import Optional, List
 from datetime import date, datetime
 from enum import Enum
 
+from schemas.tag_schemas import TagResponse
+
 # List status options
 class ListStatus(str, Enum):
     ACTIVE = "active"
@@ -12,7 +14,7 @@ class ListStatus(str, Enum):
 
 # Base List schema
 class ListBase(BaseModel):
-    name: str
+    title: str
     description: Optional[str] = None
     priority: Optional[int] = None  # 1-5 scale
     status: ListStatus = ListStatus.ACTIVE
@@ -23,7 +25,7 @@ class ListCreate(ListBase):
 
 # For updating lists
 class ListUpdate(BaseModel):
-    name: Optional[str] = None
+    title: Optional[str] = None
     description: Optional[str] = None
     priority: Optional[int] = None
     status: Optional[ListStatus] = None
@@ -69,7 +71,7 @@ class ListResponse(ListBase):
     active_task_count: int = 0
     
     # Tags
-    tags: List[dict] = []
+    tags: List[TagResponse] = []
     
     model_config = ConfigDict(from_attributes=True)
 
