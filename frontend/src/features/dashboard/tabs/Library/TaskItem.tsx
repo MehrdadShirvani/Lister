@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import styles from './TaskItem.module.css';
 import api from '../../../../services/api';
-import type { TaskPreview, TaskResponse } from '../../../../types';
+import type { TaskResponse } from '../../../../types';
 
 interface TaskItemProps {
   task: TaskResponse;

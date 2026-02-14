@@ -158,7 +158,7 @@ export const TagSelector: React.FC<TagSelectorProps> = React.memo(({
   }, [onChange]);
 
   // Get available types from tags
-  const availableTypes = useMemo(() => Object.keys(tagsByType).sort(), [tagsByType]);
+  // const availableTypes = useMemo(() => Object.keys(tagsByType).sort(), [tagsByType]);
 
   return (
     <div className={styles.container}>

@@ -65,7 +65,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({ onToggleMode }) => {
     setSuccess(null);
 
     try {
-      const response = await api.Auth.signup(formData);
+      await api.Auth.signup(formData);
       
       // Show success message
       setSuccess('Account created successfully!');

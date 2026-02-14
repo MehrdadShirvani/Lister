@@ -1,5 +1,5 @@
 // components/dashboard/notes/NoteFilterBar.tsx
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './NoteFilterBar.module.css';
 import type { NoteFilterParams } from '../../../../types';
 import type { TagResponse } from '../../../../types/tag';

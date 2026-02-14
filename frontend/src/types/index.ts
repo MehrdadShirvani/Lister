@@ -14,6 +14,6 @@ export * from './plan';
 export type { TagType } from './tag';
 export type { RecurrenceType, BlockType, BlockStatus } from './timeblock';
 export type { TaskStatus, TaskType } from './task';
-export type { ListStatus } from './list';
+// export type { ListStatus } from './list';
 // export type { SuggestionStatus, SuggestionResponseType } from './suggestion';
 export type { PlanStatus } from './plan';
