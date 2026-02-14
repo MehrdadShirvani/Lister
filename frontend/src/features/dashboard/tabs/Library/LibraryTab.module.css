@@ -1,0 +1,145 @@
+.tabContainer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    animation: fadeIn 0.5s ease;
+}
+
+.libraryHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.headerLeft {
+    flex: 1;
+}
+
+.backButton {
+    background: none;
+    border: none;
+    color: var(--color-accent);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.backButton:hover {
+    background: var(--color-accent-soft);
+    transform: translateX(-4px);
+}
+
+.sectionTitle {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.headerControls {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.viewModeToggle {
+    display: flex;
+    gap: var(--spacing-xs);
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
+    padding: 4px;
+    border: 1px solid var(--color-border);
+}
+
+.viewModeButton {
+    background: none;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    cursor: pointer;
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-fast);
+}
+
+.viewModeButton:hover {
+    color: var(--color-accent);
+}
+
+.viewModeActive {
+    background: var(--color-accent);
+    color: var(--color-bg-primary);
+}
+
+.viewModeActive:hover {
+    color: var(--color-bg-primary);
+}
+
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-2xl);
+    color: var(--color-text-tertiary);
+    gap: var(--spacing-md);
+}
+
+.loadingSpinner {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--color-border);
+    border-top-color: var(--color-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .libraryHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .headerControls {
+        width: 100%;
+    }
+
+    .viewModeToggle {
+        width: 100%;
+    }
+
+    .viewModeButton {
+        flex: 1;
+        text-align: center;
+    }
+
+    .sectionTitle {
+        font-size: 1.3rem;
+    }
+}

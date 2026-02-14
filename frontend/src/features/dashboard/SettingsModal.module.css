@@ -1,0 +1,249 @@
+/* components/dashboard/SettingsModal.module.css */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+    padding: var(--spacing-md);
+}
+
+.modal {
+    background: var(--color-surface);
+    border-radius: var(--radius-xl);
+    width: 100%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-lg);
+    animation: slideUp 0.4s ease;
+}
+
+.modalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.modalTitle {
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--color-text-primary);
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: var(--color-text-tertiary);
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all var(--transition-fast);
+}
+
+.closeButton:hover {
+    background: var(--color-bg-tertiary);
+    color: var(--color-accent);
+}
+
+.modalContent {
+    padding: var(--spacing-lg);
+}
+
+.profileSection {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.profileAvatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-accent-hover));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--color-bg-primary);
+    font-weight: 500;
+}
+
+.profileInfo h3 {
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+}
+
+.profileInfo p {
+    font-size: 0.9rem;
+    color: var(--color-text-tertiary);
+}
+
+.settingsSection {
+    margin-bottom: var(--spacing-xl);
+}
+
+.settingsSectionTitle {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-md);
+}
+
+.settingItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.settingLabel {
+    color: var(--color-text-primary);
+    margin-bottom: 2px;
+}
+
+.settingDescription {
+    font-size: 0.8rem;
+    color: var(--color-text-tertiary);
+}
+
+/* Switch toggle */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-bg-tertiary);
+    transition: var(--transition-base);
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
+    background-color: var(--color-text-secondary);
+    transition: var(--transition-base);
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: var(--color-accent);
+}
+
+input:checked+.slider:before {
+    transform: translateX(24px);
+    background-color: var(--color-bg-primary);
+}
+
+/* Select dropdown */
+.select {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xs) var(--spacing-md);
+    color: var(--color-text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    outline: none;
+}
+
+.select:hover {
+    border-color: var(--color-accent);
+}
+
+/* Menu buttons */
+.menuButton {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: var(--spacing-md) 0;
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color var(--transition-fast);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.menuButton:last-of-type {
+    border-bottom: none;
+}
+
+.menuButton:hover {
+    color: var(--color-accent);
+}
+
+.dangerButton {
+    color: var(--color-error);
+}
+
+.dangerButton:hover {
+    color: #d18f8f;
+}
+
+.modalFooter {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+}
+
+.version {
+    font-size: 0.8rem;
+    color: var(--color-text-tertiary);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
