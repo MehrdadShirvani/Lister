@@ -7,15 +7,19 @@ import uvicorn
 from core.config import settings
 from core.database import engine, Base
 # from routers import accounts, lists, tasks, tags, notifications, notes, plans, suggestions
-from routers import auth, tags, timeblocks, tasks, lists, notes, plans, suggestions
+from routers import auth, tags, timeblocks, tasks, lists, notes, plans
 from models.account_models import AccountStatus, Account
 from models.list_models import List
-from models.task_models import Task, TaskUrl, Suggestion
+from models.task_models import Task, TaskUrl
+# from models.suggestion_models import Suggestion
 from models.tag_models import Tag
 from models.notification_models import Notification
 from models.note_models import Note
 from models.plan_models import Plan
 from models.timeblock_models import TimeBlock
+from fastapi.openapi.utils import get_openapi
+import sys, os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -42,8 +46,12 @@ def seed_initial_data():
     try:
         from seed_data import main as seed_main
         seed_main()
-    except ImportError:
+    except ImportError as e:
+        print(f"✗ ImportError: {e}")
+        print(f"Current directory: {os.getcwd()}")
+        print(f"Files in current directory: {os.listdir('.')}")
         print("Seed script not found, skipping data seeding")
+        
     except Exception as e:
         print(f"Error during seeding: {e}")
 
@@ -68,6 +76,34 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_headers=["*"],
     )
 
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+    
+    openapi_schema = get_openapi(
+        title=settings.PROJECT_NAME,
+        version=settings.VERSION,
+        description="Comprehensive task management system with JWT authentication",
+        routes=app.routes,
+    )
+    
+    # Add security scheme
+    openapi_schema["components"]["securitySchemes"] = {
+        "BearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT",
+            "description": "Enter JWT token: `Bearer <token>`"
+        }
+    }
+    
+    openapi_schema["security"] = [{"BearerAuth": []}]
+    
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+app.openapi = custom_openapi
+
 # # Include all routers
 app.include_router(auth.router, prefix=settings.API_V1_STR)
 # app.include_router(accounts.router, prefix=settings.API_V1_STR)
@@ -78,7 +114,7 @@ app.include_router(timeblocks.router, prefix=settings.API_V1_STR)
 # app.include_router(notifications.router, prefix=settings.API_V1_STR)
 app.include_router(notes.router, prefix=settings.API_V1_STR)
 app.include_router(plans.router, prefix=settings.API_V1_STR)
-app.include_router(suggestions.router, prefix=settings.API_V1_STR)
+# app.include_router(suggestions.router, prefix=settings.API_V1_STR)
 
 # Health check endpoints
 @app.get("/")
@@ -146,7 +182,7 @@ if __name__ == "__main__":
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=8000,
+        port=8005,
         reload=settings.DEBUG,
         log_level="debug" if settings.DEBUG else "info",
     )

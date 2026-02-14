@@ -7,7 +7,7 @@ import os
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from backend.core.config import Settings
+from core.config import Settings
 from core.database import SessionLocal
 from models.account_models import AccountRole, AccountStatus, Account
 from models.tag_models import Tag
