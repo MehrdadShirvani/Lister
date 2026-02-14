@@ -1,0 +1,75 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: lister-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-lister}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-lister123}
+      POSTGRES_DB: ${POSTGRES_DB:-listerdb}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - lister-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-lister}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: lister-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-lister}:${POSTGRES_PASSWORD:-lister123}@postgres:5432/${POSTGRES_DB:-listerdb}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      JWT_ALGORITHM: ${JWT_ALGORITHM:-HS256}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080}
+    networks:
+      - lister-network
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build: ./frontend
+    context: ./frontend
+    args:
+      - VITE_API_URL=${VITE_API_URL}
+    container_name: lister-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    networks:
+      - lister-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: lister-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - lister-network
+
+networks:
+  lister-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
