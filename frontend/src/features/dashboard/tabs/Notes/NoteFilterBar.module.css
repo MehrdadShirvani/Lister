@@ -1,0 +1,199 @@
+/* components/dashboard/notes/NoteFilterBar.module.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    width: 100%;
+}
+
+.searchBar {
+    position: relative;
+    width: 100%;
+}
+
+.searchIcon {
+    position: absolute;
+    left: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-text-tertiary);
+    font-size: 1rem;
+    z-index: 1;
+}
+
+.searchInput {
+    width: 100%;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md) var(--spacing-md) var(--spacing-md) 2.5rem;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    transition: all var(--transition-fast);
+    padding-right: 3.5rem;
+}
+
+.searchInput:hover {
+    border-color: var(--color-accent);
+}
+
+.searchInput:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px var(--color-accent-soft);
+}
+
+.filterToggle {
+    position: absolute;
+    right: var(--spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    color: var(--color-text-tertiary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    font-size: 1rem;
+}
+
+.filterToggle:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.filterToggle.active {
+    background: var(--color-accent);
+    color: var(--color-bg-primary);
+    border-color: var(--color-accent);
+}
+
+.filtersPanel {
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    animation: slideDown 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.filterSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.filterTitle {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+.sortSelect {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
+.checkboxGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.checkbox input {
+    cursor: pointer;
+}
+
+.tagList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    max-height: 200px;
+    overflow-y: auto;
+    padding: var(--spacing-xs);
+}
+
+.tagButton {
+    background: var(--color-bg-tertiary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xs) var(--spacing-md);
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tagButton:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.tagSelected {
+    background: var(--color-accent);
+    color: var(--color-bg-primary);
+    border-color: var(--color-accent);
+}
+
+.filterActions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+}
+
+.clearButton {
+    background: none;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    color: var(--color-text-tertiary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.clearButton:hover {
+    border-color: var(--color-error);
+    color: var(--color-error);
+    background: rgba(191, 107, 107, 0.1);
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .checkboxGroup {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+}
