@@ -1,5 +1,5 @@
 import os
-from typing import Optional
+from typing import List, Optional
 from pydantic import PostgresDsn, field_validator
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
     # CORS
-    BACKEND_CORS_ORIGINS = os.getenv("BACKEND_CORS_ORIGINS", "").split(",")
+    BACKEND_CORS_ORIGINS: List[str]= os.getenv("BACKEND_CORS_ORIGINS", "").split(",")
     # Database Settings
     DB_USER: str = os.getenv("DB_USER", "postgres")
     DB_PASSWORD: str = os.getenv("DB_PASSWORD", "postgres")
