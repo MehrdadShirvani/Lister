@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     VERSION: str = "1.0.0"
     
     # Security
-    SECRET_KEY: str = os.getenv("SECRET_KEY")
+    JWT_SECRET_KEY: str = os.getenv("JWT_SECRET_KEY")
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     

@@ -36,7 +36,7 @@ class AuthService:
         to_encode.update({"exp": expire})
         encoded_jwt = jwt.encode(
             to_encode, 
-            settings.SECRET_KEY, 
+            settings.JWT_SECRET_KEY, 
             algorithm=settings.ALGORITHM
         )
         return encoded_jwt
@@ -51,7 +51,7 @@ class AuthService:
         try:
             payload = jwt.decode(
                 token, 
-                settings.SECRET_KEY, 
+                settings.JWT_SECRET_KEY, 
                 algorithms=[settings.ALGORITHM]
             )
             user_id: int = payload.get("sub")
