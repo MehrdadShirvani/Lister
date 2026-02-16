@@ -5,6 +5,7 @@ import { useAuthStore } from '../stores/useAuthStore';
 
 // Types imports
 
+
 axios.defaults.baseURL = import.meta.env.VITE_API_URL
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
