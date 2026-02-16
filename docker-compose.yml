@@ -55,10 +55,7 @@ services:
       retries: 3
 
   frontend:
-    build:
-      context: ./frontend
-      args:
-        VITE_API_URL: ${VITE_API_URL}
+    build: ./frontend
     container_name: lister-frontend
     ports:
       - "8080:80"
